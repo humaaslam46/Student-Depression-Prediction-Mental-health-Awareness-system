@@ -296,14 +296,14 @@ def get_remedies(gender, age, academic_pressure, study_satisfaction,
 
     remedies = []
 
-  
+
     remedies.append({
         "icon": "🧠", "title": "Cognitive Defusion (5 min/day)",
         "desc": "When a stressful thought hits, name it out loud: <em>\"I notice I'm having the thought that...\"</em> This ACT technique creates mental distance and reduces emotional reactivity. No app, no subscription — just your voice.",
         "tag": "Mental Health"
     })
 
-    
+
     if d['Sleep Duration'] <= 2:
         remedies.append({
             "icon": "😴", "title": "Hard Sleep Cutoff — Non-Negotiable",
@@ -317,7 +317,7 @@ def get_remedies(gender, age, academic_pressure, study_satisfaction,
             "tag": "Sleep"
         })
 
-    
+
     if d['Academic Pressure'] >= 4:
         remedies.append({
             "icon": "📚", "title": "The 2-Task Rule for High-Pressure Days",
@@ -331,7 +331,7 @@ def get_remedies(gender, age, academic_pressure, study_satisfaction,
             "tag": "Academic"
         })
 
-    
+
     if d['Financial Stress'] >= 4:
         remedies.append({
             "icon": "💰", "title": "Anxiety Journaling for Financial Stress",
@@ -344,7 +344,7 @@ def get_remedies(gender, age, academic_pressure, study_satisfaction,
             "tag": "Financial"
         })
 
-    
+
     if d['Dietary Habits'] == 1:
         remedies.append({
             "icon": "🥗", "title": "The One Good Meal Rule",
@@ -587,43 +587,43 @@ with gr.Blocks(css=custom_css, theme=gr.themes.Default()) as demo:
 
     with gr.Tabs():
 
-   
+
         with gr.TabItem("🎯 Screening & Diagnostics Dashboard"):
             with gr.Row():
                 with gr.Column(scale=3):
                     with gr.Group(elem_classes="glass-panel"):
                         gr.HTML("<div class='panel-header-text'>01. Profile & Demographics</div>")
                         with gr.Row():
-                            gender = gr.Dropdown(["Male", "Female"], label="Biological Sex Assignment", value="Female")
-                            age    = gr.Slider(15, 40, value=22, step=1, label="Age Classification (Years)")
+                            gender = gr.Dropdown(["Male", "Female"], label="Gender", value="Female")
+                            age    = gr.Slider(15, 40, value=22, step=1, label="Age (Years)")
 
                     gr.HTML("<div style='margin-bottom: 15px;'></div>")
 
                     with gr.Group(elem_classes="glass-panel"):
                         gr.HTML("<div class='panel-header-text'>02. Academic Performance & Stress Weights</div>")
                         with gr.Row():
-                            academic_pressure  = gr.Slider(1, 5, value=3, step=1, label="Perceived Academic Workload Stress (1-5)")
-                            study_satisfaction = gr.Slider(1, 5, value=3, step=1, label="Institutional Satisfaction Index (1-5)")
+                            academic_pressure  = gr.Slider(1, 5, value=3, step=1, label="Daily Workload (1-5)")
+                            study_satisfaction = gr.Slider(1, 5, value=3, step=1, label="Academic Satisfaction (1-5)")
                         with gr.Row():
-                            cgpa             = gr.Slider(0.0, 4.0, value=3.0, step=0.01, label="Current Grade Point Average (CGPA Scale)")
-                            work_study_hours = gr.Slider(0, 16, value=6, step=1, label="Daily Academic/Employment Commitment (Hours)")
+                            cgpa             = gr.Slider(0.0, 4.0, value=3.0, step=0.01, label="Current CGPA (CGPA Scale)")
+                            work_study_hours = gr.Slider(0, 16, value=6, step=1, label="Daily School/Work Hours")
 
                     gr.HTML("<div style='margin-bottom: 15px;'></div>")
 
                     with gr.Group(elem_classes="glass-panel"):
                         gr.HTML("<div class='panel-header-text'>03. Environmental Stressors & Physiology</div>")
                         with gr.Row():
-                            financial_stress = gr.Slider(1, 5, value=3, step=1, label="Financial Insecurity Scale (1-5)")
-                            sleep_duration   = gr.Dropdown(["Less than 5 hours","5-6 hours","7-8 hours","More than 8 hours"], value="7-8 hours", label="Diurnal Sleep Range")
-                            dietary_habits   = gr.Dropdown(["Unhealthy","Moderate","Healthy"], value="Moderate", label="Nutritional Profile Consistency")
+                            financial_stress = gr.Slider(1, 5, value=3, step=1, label="Financial Insecurity (1-5)")
+                            sleep_duration   = gr.Dropdown(["Less than 5 hours","5-6 hours","7-8 hours","More than 8 hours"], value="7-8 hours", label="Sleep Hours")
+                            dietary_habits   = gr.Dropdown(["Unhealthy","Moderate","Healthy"], value="Moderate", label="Nutrition Value")
 
                     gr.HTML("<div style='margin-bottom: 15px;'></div>")
 
                     with gr.Group(elem_classes="glass-panel"):
                         gr.HTML("<div class='panel-header-text'>04. Clinical History & Critical Red Flags</div>")
                         with gr.Row():
-                            suicidal_thoughts = gr.Radio(["Yes","No"], value="No", label="History of Acute Ideation / Crisis Support Request")
-                            family_history    = gr.Radio(["Yes","No"], value="No", label="Heritable Lineage of Diagnosed Psychological Conditions")
+                            suicidal_thoughts = gr.Radio(["Yes","No"], value="No", label="Ever had suicidal thoughts?")
+                            family_history    = gr.Radio(["Yes","No"], value="No", label="Family history of Mental illness?")
 
                     gr.HTML("<div style='margin-bottom: 20px;'></div>")
                     predict_btn = gr.Button("📊 Run Clinical Risk Analysis", elem_classes="action-btn-spec")
@@ -656,7 +656,7 @@ with gr.Blocks(css=custom_css, theme=gr.themes.Default()) as demo:
             with gr.Row():
                 chart_wellness = gr.Plot(label="Wellness Score Card", elem_classes="glass-panel")
 
-        
+
         with gr.TabItem("💊 Wellness Remedies & Action Plan"):
             with gr.Group(elem_classes="glass-panel"):
                 gr.HTML("<div class='panel-header-text'>Personalised Severity-Based Recommendations</div>")
@@ -693,14 +693,14 @@ with gr.Blocks(css=custom_css, theme=gr.themes.Default()) as demo:
                     </div>
                 """)
 
-  
+
     all_inputs = [
         gender, age, academic_pressure, study_satisfaction,
         sleep_duration, work_study_hours, financial_stress,
         dietary_habits, suicidal_thoughts, family_history, cgpa
     ]
 
-  
+
     predict_btn.click(
         fn=predict_depression,
         inputs=all_inputs,
@@ -721,4 +721,4 @@ with gr.Blocks(css=custom_css, theme=gr.themes.Default()) as demo:
 # LAUNCH
 # ============================================================
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(share=True)
